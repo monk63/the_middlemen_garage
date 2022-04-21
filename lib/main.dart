@@ -1,13 +1,41 @@
 
 import 'package:flutter/material.dart';
+import 'package:splash_screen_view/SplashScreenView.dart';
+import 'package:the_middlemen_garage/pages/messages.dart';
 import 'pages/home.dart';
-import 'pages/splash.dart';
-void main() => runApp(const MyApp());
+
+void main() => runApp(const Splash());
+
+class Splash extends StatelessWidget {
+  const Splash({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Widget example1 = SplashScreenView(
+      navigateRoute: const MyApp(),
+      duration: 4000,
+      imageSize: 150,
+      imageSrc: 'assets/images/splash.png',
+      text: "The Middlemen Garage",
+      textType: TextType.NormalText,
+      textStyle: TextStyle(
+        fontSize: 30.0,
+      ),
+      backgroundColor: Color.fromARGB(255, 68, 32, 32),
+    );
+
+    return MaterialApp(
+      title: 'Splash screen Demo',
+      home: example1,
+    );
+  }
+}
+
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  static const String _title = 'API CMS';
+  static const String _title = 'The Garage';
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +44,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const MyStatefulWidget(),
-       // '/update_con': (context) => const updateContact(),
-       // '/view_con': (context) => const ViewContact()
+      
       },
     );
   }
@@ -36,8 +63,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
-  //   AddContact(),
-  //  servicepage(),
+    Messages(),
+ 
   ];
 
   void _onItemTapped(int index) {
@@ -48,15 +75,12 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   @override
   Widget build(BuildContext context) { 
-    child:  MaterialApp(
-       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
-     );
+
     
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Contact Management System'),
+        title: const Text('The Middlemen Garage'),
         automaticallyImplyLeading: false,
         backgroundColor: Color.fromARGB(255, 179, 57, 57), // appbar color.
         foregroundColor: Colors.black, // appbar text color.
@@ -68,11 +92,11 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Contact',
+            label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.contact_page),
-            label: 'Add Contact',
+            icon: Icon(Icons.message),
+            label: 'Messages',
           ),
         ],
         currentIndex: _selectedIndex,
