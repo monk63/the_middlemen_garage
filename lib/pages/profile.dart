@@ -19,24 +19,24 @@ class _ProfileState extends State<Profile> {
   @override
   void initState() {
     super.initState();
-    FirebaseFirestore.instance
-        .collection("users")
-        .doc(user!.uid)
-        .get()
-        .then((value) {
-      this.loggedInUser = UserModel.fromMap(value.data());
-      setState(() {});
-    },);
+    FirebaseFirestore.instance.collection("users").doc(user!.uid).get().then(
+      (value) {
+        this.loggedInUser = UserModel.fromMap(value.data());
+        setState(() {});
+      },
+    );
   }
 
-    @override
-    Widget build(BuildContext context) {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text("Profile"),
-          automaticallyImplyLeading: false,
-          // centerTitle: true,
-           actions: <Widget>[
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Profile"),
+
+        automaticallyImplyLeading: false,
+        // centerTitle: true,
+
+        actions: <Widget>[
           IconButton(
             icon: const Icon(
               Icons.settings,
@@ -50,60 +50,68 @@ class _ProfileState extends State<Profile> {
             },
           )
         ],
-        ),
-        body: Center(
-          child: Padding(
-            padding: EdgeInsets.all(20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(
-                  height: 150,
-                  child: CircleAvatar(
-                   backgroundImage: AssetImage("assets/images/profile.png"),
-                   radius: 70.0,
-                 ),
+      ),
+      body: Center(
+        child: Padding(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(
+                height: 150,
+                child: CircleAvatar(
+                  backgroundImage: AssetImage("assets/images/profile.png"),
+                  radius: 70.0,
                 ),
-                Text(
-                  "Welcome Back",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Text(
+                "Welcome Back",
+                style: TextStyle(
+                    
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                "${loggedInUser.firstName} ${loggedInUser.secondName}",
+                style: TextStyle(
+                  color: Colors.black54,
+                  fontWeight: FontWeight.w500,
                 ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  "${loggedInUser.firstName} ${loggedInUser.secondName}",
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Text("${loggedInUser.email}",
                   style: TextStyle(
                     color: Colors.black54,
                     fontWeight: FontWeight.w500,
-                  ),
-                ),
-                Text("${loggedInUser.email}",
-                    style: TextStyle(
-                      color: Colors.black54,
-                      fontWeight: FontWeight.w500,
-                    )),
-                SizedBox(
-                  height: 15,
-                ),
-                ActionChip(
-                  label: Text("Logout"),
-                  onPressed: () {
-                    logout(context);
-                  },
-                ),
-              ],
-            ),
+                  )),
+              SizedBox(
+                height: 15,
+              ),
+              // ActionChip(
+              //   label: Text("Logout"),
+              //   onPressed: () {
+              //     logout(context);
+              //   },
+              // ),
+            ],
           ),
         ),
-      );
-    }
+      ),
+    );
+  }
 
-    Future<void> logout(BuildContext context) async {
-      await FirebaseAuth.instance.signOut();
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => LoginScreen()));
-    
+  Future<void> logout(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => LoginScreen()));
   }
 }

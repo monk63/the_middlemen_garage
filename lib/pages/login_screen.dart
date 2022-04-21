@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:the_middlemen_garage/main.dart';
-import 'home.dart';
 import 'registration_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -13,7 +12,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   //Form key
   final _formKey = GlobalKey<FormState>();
 
@@ -26,10 +24,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   // string for displaying the error Message
   String? errorMessage;
-  
+
   @override
   Widget build(BuildContext context) {
-
     //Email field
     final emailField = TextFormField(
       autofocus: false,
@@ -72,6 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if (!regex.hasMatch(value)) {
           return ("Enter Valid Password(Min. 6 Character)");
         }
+        return null;
       },
       onSaved: (value) {
         passwordController.text = value!;
@@ -136,26 +134,27 @@ class _LoginScreenState extends State<LoginScreen> {
                     loginButton,
                     SizedBox(height: 15),
                     Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text("Don't have an account? "),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          RegistrationScreen()));
-                            },
-                            child: Text(
-                              "SignUp",
-                              style: TextStyle(
-                                  color: Colors.redAccent,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15),
-                            ),
-                          )
-                        ])
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text("Don't have an account? "),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        RegistrationScreen()));
+                          },
+                          child: Text(
+                            "SignUp",
+                            style: TextStyle(
+                                color: Colors.redAccent,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15),
+                          ),
+                        )
+                      ],
+                    )
                   ],
                 ),
               ),
@@ -165,18 +164,23 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-  
+
   // login function
   void signIn(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       try {
         await _auth
             .signInWithEmailAndPassword(email: email, password: password)
-            .then((uid) => {
-                  Fluttertoast.showToast(msg: "Login Successful"),
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => MyStatefulWidget())),
-                });
+            .then(
+              (uid) => {
+                Fluttertoast.showToast(msg: "Login Successful"),
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => MyStatefulWidget(),
+                  ),
+                ),
+              },
+            );
       } on FirebaseAuthException catch (error) {
         switch (error.code) {
           case "invalid-email":
