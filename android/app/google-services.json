@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "57817283272",
+    "project_id": "the-garage-5676d",
+    "storage_bucket": "the-garage-5676d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:57817283272:android:1021a2448ab712eb2e83fd",
+        "android_client_info": {
+          "package_name": "com.example.the_middlemen_garage"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "57817283272-k99otpfg6k2gmselotb699t1p4o27bdv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.the_middlemen_garage",
+            "certificate_hash": "f689d045bfe6875349d8dd681a7a5c3a0aea7da6"
+          }
+        },
+        {
+          "client_id": "57817283272-97fojbvmljscfctfbilc78vjgiunj6it.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkR-l8r-J6uhnOU0MXuORdoYAiqFg2D5U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "57817283272-97fojbvmljscfctfbilc78vjgiunj6it.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

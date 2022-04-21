@@ -1,7 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
+import 'package:the_middlemen_garage/pages/login_screen.dart';
 import 'package:the_middlemen_garage/pages/messages.dart';
+import 'package:the_middlemen_garage/pages/profile.dart';
 import 'pages/home.dart';
 
 void main() => runApp(const Splash());
@@ -12,7 +14,7 @@ class Splash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget example1 = SplashScreenView(
-      navigateRoute: const MyApp(),
+      navigateRoute: const LoginScreen(),
       duration: 4000,
       imageSize: 150,
       imageSrc: 'assets/images/splash.png',
@@ -31,12 +33,9 @@ class Splash extends StatelessWidget {
   }
 }
 
-
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
   static const String _title = 'The Garage';
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -44,7 +43,6 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const MyStatefulWidget(),
-      
       },
     );
   }
@@ -64,6 +62,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   static const List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
     Messages(),
+    Profile(),
  
   ];
 
@@ -75,9 +74,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   @override
   Widget build(BuildContext context) { 
-
-    
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('The Middlemen Garage'),
@@ -97,6 +93,10 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           BottomNavigationBarItem(
             icon: Icon(Icons.message),
             label: 'Messages',
+          ),
+           BottomNavigationBarItem(
+            icon: Icon(Icons.contact_page),
+            label: 'Profile',
           ),
         ],
         currentIndex: _selectedIndex,
