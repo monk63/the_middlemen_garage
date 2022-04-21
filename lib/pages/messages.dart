@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Messages extends StatefulWidget {
-  const Messages({ Key? key }) : super(key: key);
+  const Messages({Key? key}) : super(key: key);
 
   @override
   State<Messages> createState() => _MessagesState();
@@ -10,9 +10,11 @@ class Messages extends StatefulWidget {
 class _MessagesState extends State<Messages> {
   @override
   Widget build(BuildContext context) {
-     return Container(
-      child: Text('Messages screen'),
-      
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Messages'),
+        automaticallyImplyLeading: false,
+      ),
     );
   }
 }

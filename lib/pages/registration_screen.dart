@@ -1,4 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:the_middlemen_garage/pages/home.dart';
+
+import '../model/user_model.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({ Key? key }) : super(key: key);
@@ -14,6 +20,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   // Form key
   final _formKey = GlobalKey<FormState>();
+
+  final _auth = FirebaseAuth.instance;
 
   // Editing Controller
   final firstNameEditingController = new TextEditingController();
@@ -236,8 +244,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   void signUp(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       try {
-        await _auth
-            .createUserWithEmailAndPassword(email: email, password: password)
+        await _auth.createUserWithEmailAndPassword(email: email, password: password)
             .then((value) => {postDetailsToFirestore()})
             .catchError((e) {
           Fluttertoast.showToast(msg: e!.message);

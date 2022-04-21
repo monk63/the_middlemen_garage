@@ -1,4 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:the_middlemen_garage/main.dart';
+import 'home.dart';
 import 'registration_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -17,6 +21,12 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = new TextEditingController();
   final TextEditingController passwordController = new TextEditingController();
 
+  // Firebase
+  final _auth = FirebaseAuth.instance;
+
+  // string for displaying the error Message
+  String? errorMessage;
+  
   @override
   Widget build(BuildContext context) {
 
@@ -155,7 +165,6 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
   
   // login function
   void signIn(String email, String password) async {
@@ -166,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
             .then((uid) => {
                   Fluttertoast.showToast(msg: "Login Successful"),
                   Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => HomeScreen())),
+                      MaterialPageRoute(builder: (context) => MyStatefulWidget())),
                 });
       } on FirebaseAuthException catch (error) {
         switch (error.code) {

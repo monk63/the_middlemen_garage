@@ -1,4 +1,4 @@
-
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
 import 'package:the_middlemen_garage/pages/login_screen.dart';
@@ -6,7 +6,12 @@ import 'package:the_middlemen_garage/pages/messages.dart';
 import 'package:the_middlemen_garage/pages/profile.dart';
 import 'pages/home.dart';
 
-void main() => runApp(const Splash());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  runApp(Splash());
+}
 
 class Splash extends StatelessWidget {
   const Splash({Key? key}) : super(key: key);
@@ -56,53 +61,91 @@ class MyStatefulWidget extends StatefulWidget {
 }
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    HomeScreen(),
-    Messages(),
-    Profile(),
- 
+  List pages = [
+    const HomeScreen(),
+    const Messages(),
+    const Profile(),
   ];
-
-  void _onItemTapped(int index) {
+  int currentIndex = 0;
+  void onTap(int index) {
     setState(() {
-      _selectedIndex = index;
+      currentIndex = index;
     });
   }
+  // int _selectedIndex = 0;
+  // static const TextStyle optionStyle =
+  //     TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  // static const List<Widget> _widgetOptions = <Widget>[
+  //   HomeScreen(),
+  //   Messages(),
+  //   Profile(),
+
+  // ];
+
+  // void _onItemTapped(int index) {
+  //   setState(() {
+  //     _selectedIndex = index;
+  //   });
+  // }
 
   @override
-  Widget build(BuildContext context) { 
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('The Middlemen Garage'),
-        automaticallyImplyLeading: false,
-        backgroundColor: Color.fromARGB(255, 179, 57, 57), // appbar color.
-        foregroundColor: Colors.black, // appbar text color.
-      ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
+      body: pages[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
+        onTap: onTap,
+        currentIndex: currentIndex,
+        type: BottomNavigationBarType.fixed,
+        iconSize: 30,
+        selectedFontSize: 0,
+        unselectedFontSize: 0,
+        elevation: 0,
+        showUnselectedLabels: false,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.home_filled),
             label: 'Home',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.message),
             label: 'Messages',
           ),
-           BottomNavigationBarItem(
-            icon: Icon(Icons.contact_page),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_sharp),
             label: 'Profile',
           ),
         ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Color.fromARGB(255, 201, 61, 26),
-        onTap: _onItemTapped,
       ),
     );
+    // return Scaffold(
+    //   appBar: AppBar(
+    //     title: const Text('The Middlemen Garage'),
+    //     automaticallyImplyLeading: false,
+    //     backgroundColor: Color.fromARGB(255, 179, 57, 57), // appbar color.
+    //     foregroundColor: Colors.black, // appbar text color.
+    //   ),
+    //   body: Center(
+    //     child: _widgetOptions.elementAt(_selectedIndex),
+    //   ),
+    //   bottomNavigationBar: BottomNavigationBar(
+    //     items: const <BottomNavigationBarItem>[
+    //       BottomNavigationBarItem(
+    //         icon: Icon(Icons.home),
+    //         label: 'Home',
+    //       ),
+    //       BottomNavigationBarItem(
+    //         icon: Icon(Icons.message),
+    //         label: 'Messages',
+    //       ),
+    //        BottomNavigationBarItem(
+    //         icon: Icon(Icons.contact_page),
+    //         label: 'Profile',
+    //       ),
+    //     ],
+    //     currentIndex: _selectedIndex,
+    //     selectedItemColor: Color.fromARGB(255, 201, 61, 26),
+    //     onTap: _onItemTapped,
+    //   ),
+    // );
   }
 }
