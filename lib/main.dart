@@ -2,7 +2,9 @@
 //References : https://www.youtube.com/watch?v=1k-gITZA9CI&t=851s
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
+import 'package:the_middlemen_garage/Components/google_sign_in.dart';
 import 'package:the_middlemen_garage/pages/login_screen.dart';
 import 'package:the_middlemen_garage/pages/messages.dart';
 import 'package:the_middlemen_garage/pages/profile.dart';
@@ -47,9 +49,12 @@ class Splash extends StatelessWidget {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   static const String _title = 'The Garage';
+  // This widget is the root of the application.
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+  Widget build(BuildContext context) =>
+    ChangeNotifierProvider(
+      create: (context) => GoogleSignInProvider(),
+    child: MaterialApp(
       title: _title,
        theme: ThemeData(
     
@@ -59,8 +64,9 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const MyStatefulWidget(),
       },
+    ),
     );
-  }
+  
 }
 
 class MyStatefulWidget extends StatefulWidget {
@@ -82,22 +88,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       currentIndex = index;
     });
   }
-  // int _selectedIndex = 0;
-  // static const TextStyle optionStyle =
-  //     TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  // static const List<Widget> _widgetOptions = <Widget>[
-  //   HomeScreen(),
-  //   Messages(),
-  //   Profile(),
-
-  // ];
-
-  // void _onItemTapped(int index) {
-  //   setState(() {
-  //     _selectedIndex = index;
-  //   });
-  // }
-
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -127,35 +118,5 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         ],
       ),
     );
-    // return Scaffold(
-    //   appBar: AppBar(
-    //     title: const Text('The Middlemen Garage'),
-    //     automaticallyImplyLeading: false,
-    //     backgroundColor: Color.fromARGB(255, 179, 57, 57), // appbar color.
-    //     foregroundColor: Colors.black, // appbar text color.
-    //   ),
-    //   body: Center(
-    //     child: _widgetOptions.elementAt(_selectedIndex),
-    //   ),
-    //   bottomNavigationBar: BottomNavigationBar(
-    //     items: const <BottomNavigationBarItem>[
-    //       BottomNavigationBarItem(
-    //         icon: Icon(Icons.home),
-    //         label: 'Home',
-    //       ),
-    //       BottomNavigationBarItem(
-    //         icon: Icon(Icons.message),
-    //         label: 'Messages',
-    //       ),
-    //        BottomNavigationBarItem(
-    //         icon: Icon(Icons.contact_page),
-    //         label: 'Profile',
-    //       ),
-    //     ],
-    //     currentIndex: _selectedIndex,
-    //     selectedItemColor: Color.fromARGB(255, 201, 61, 26),
-    //     onTap: _onItemTapped,
-    //   ),
-    // );
   }
 }
