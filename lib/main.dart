@@ -1,5 +1,5 @@
 //References : https://github.com/backslashflutter/email_password_flutter_firebase/tree/main/lib
-
+//References : https://www.youtube.com/watch?v=1k-gITZA9CI&t=851s
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
