@@ -19,12 +19,12 @@ class _ProfileState extends State<Profile> {
   @override
   void initState() {
     super.initState();
-    FirebaseFirestore.instance.collection("users").doc(user!.uid).get().then(
-      (value) {
-        this.loggedInUser = UserModel.fromMap(value.data());
-        setState(() {});
-      },
-    );
+    // FirebaseFirestore.instance.collection("users").doc(user!.uid).get().then(
+    //   (value) {
+    //     this.loggedInUser = UserModel.fromMap(value.data());
+    //     setState(() {});
+    //   },
+    // );
   }
 
   @override
@@ -79,7 +79,8 @@ class _ProfileState extends State<Profile> {
                 height: 10,
               ),
               Text(
-                "${loggedInUser.firstName} ${loggedInUser.secondName}",
+                user!.displayName ?? "user name",
+                // "${loggedInUser.firstName} ${loggedInUser.secondName}",
                 style: TextStyle(
                   color: Colors.black54,
                   fontWeight: FontWeight.w500,
@@ -88,7 +89,7 @@ class _ProfileState extends State<Profile> {
               SizedBox(
                 height: 10.0,
               ),
-              Text("${loggedInUser.email}",
+              Text(user!.email!,
                   style: TextStyle(
                     color: Colors.black54,
                     fontWeight: FontWeight.w500,

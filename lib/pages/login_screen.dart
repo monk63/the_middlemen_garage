@@ -139,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     loginButton,
                     SizedBox(height: 15),
                     //google signin
-                   // GoogleSignIn(),
+                    GoogleSignIn(),
                  
                     //Sign up
                     Row(

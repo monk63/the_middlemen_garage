@@ -52,9 +52,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of the application.
   @override
   Widget build(BuildContext context) =>
-    ChangeNotifierProvider(
-      create: (context) => GoogleSignInProvider(),
-    child: MaterialApp(
+    MaterialApp(
       title: _title,
        theme: ThemeData(
     
@@ -64,7 +62,6 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const MyStatefulWidget(),
       },
-    ),
     );
   
 }

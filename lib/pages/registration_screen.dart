@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:the_middlemen_garage/main.dart';
 import 'package:the_middlemen_garage/pages/home.dart';
 
 import '../model/user_model.dart';
@@ -284,6 +285,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = _auth.currentUser;
+  
 
     UserModel userModel = UserModel();
 
@@ -293,15 +295,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     userModel.firstName = firstNameEditingController.text;
     userModel.secondName = secondNameEditingController.text;
 
-    await firebaseFirestore
-        .collection("users")
-        .doc(user.uid)
-        .set(userModel.toMap());
+    await user.updateDisplayName("${firstNameEditingController.text} ${secondNameEditingController.text}");
+    
+
+    // await firebaseFirestore
+    //     .collection("users")
+    //     .doc(user.uid)
+    //     .set(userModel.toMap());
     Fluttertoast.showToast(msg: "Account created successfully :) ");
 
     Navigator.pushAndRemoveUntil(
         (context),
-        MaterialPageRoute(builder: (context) => HomeScreen()),
+        MaterialPageRoute(builder: (context) => MyStatefulWidget()),
         (route) => false);
   }
 }
