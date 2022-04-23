@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:the_middlemen_garage/Components/google_sign_in_button.dart';
 import 'package:the_middlemen_garage/main.dart';
 import '../Components/google_sign_in.dart';
 import 'registration_screen.dart';
@@ -30,7 +31,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //Email field
+ 
+    //Email field              
     final emailField = TextFormField(
       autofocus: false,
       controller: emailController,
@@ -109,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     //Screen
-    return Scaffold(
+     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
         child: SingleChildScrollView(
@@ -128,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Image.asset(
                           "assets/images/splash.png",
                           fit: BoxFit.contain,
-                        )),
+                        ),),
                     SizedBox(height: 45),
                     emailField,
                     SizedBox(height: 25),
@@ -136,23 +138,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(height: 35),
                     loginButton,
                     SizedBox(height: 15),
-                    //Google sign in
-
-                    ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                        primary: Color.fromARGB(255, 193, 204, 214),
-                        onPrimary: Color.fromARGB(255, 238, 232, 232),
-                        maximumSize: Size(double.infinity, 50),
-                      ),
-                      icon: FaIcon(FontAwesomeIcons.google, color: Colors.red),
-                      label: Text('Sign Up with Google'),
-                      onPressed: () {
-                        final provider = Provider.of<GoogleSignInProvider>(
-                            context,
-                            listen: false);
-                        provider.googleLogin();
-                      },
-                    ),
+                    //google signin
+                   // GoogleSignIn(),
+                 
                     //Sign up
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -184,6 +172,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+    
   }
 
   // login function
