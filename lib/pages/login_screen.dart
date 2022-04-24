@@ -28,7 +28,19 @@ class _LoginScreenState extends State<LoginScreen> {
 
   // string for displaying the error Message
   String? errorMessage;
+@override
+void initState() {
+super.initState();
+if(_auth.currentUser!=null) {
 
+    print("Already login");
+
+Future((){
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> MyStatefulWidget()));
+});
+
+}
+}
   @override
   Widget build(BuildContext context) {
  
@@ -221,3 +233,4 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 }
+
