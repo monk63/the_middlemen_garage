@@ -33,7 +33,7 @@ class _GoogleSignInState extends State<GoogleSignIn> {
       onPressed: () async {
         googleLogin().then((value){
           if (value) {// if the sign in was successful
-          Navigator.push( context, MaterialPageRoute(builder: (context)=> MyStatefulWidget()));
+          Navigator.pushReplacement( context, MaterialPageRoute(builder: (context)=> MyStatefulWidget()));
           } else {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("We couldn't sign you in")));
           }

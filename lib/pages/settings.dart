@@ -1,5 +1,7 @@
+import 'package:carbon_icons/carbon_icons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:the_middlemen_garage/pages/about_us_page.dart';
 import 'login_screen.dart';
 
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -15,14 +17,31 @@ class SettingsPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(title: Text('Settings')),
-      body: Center(
+      
+      body: Container(
+       
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-
-          //Login message
+          
+          mainAxisAlignment: MainAxisAlignment.start,
+    
+          //Login out
           children: [
-            // Text('You have logged in Successfuly'),
-            // SizedBox(height: 50),
+             
+            ListTile(
+                leading: const Icon(CarbonIcons.enterprise),
+              title: const Text("About Us"),
+              onTap: ()  {
+                
+                {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const AboutUsPage()),
+                  );
+                }
+              },
+              
+            ),
             const Spacer(),
             ListTile(
               leading: const Icon(Icons.logout),
