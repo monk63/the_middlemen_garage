@@ -2,6 +2,7 @@ import 'package:carbon_icons/carbon_icons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:the_middlemen_garage/pages/about_us_page.dart';
+import 'package:the_middlemen_garage/pages/instructions_page.dart';
 import 'login_screen.dart';
 
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -37,6 +38,21 @@ class SettingsPage extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) => const AboutUsPage()),
+                  );
+                }
+              },
+              
+            ),
+                ListTile(
+                leading: const Icon(CarbonIcons.information),
+              title: const Text("Instructions"),
+              onTap: ()  {
+                
+                {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const InstructionPage()),
                   );
                 }
               },

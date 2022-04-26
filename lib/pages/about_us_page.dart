@@ -44,10 +44,6 @@ class AboutUsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const Spacer(),
-            // const Icon(
-            //   CarbonIcons.task,
-            //   size: 64,
-            // ),
             SizedBox(
                 height: 150,
                 child: CircleAvatar(
@@ -59,7 +55,7 @@ class AboutUsPage extends StatelessWidget {
               height: 8,
             ),
             const AppBarTitle(
-              trailingTitle: 'Do It',
+              trailingTitle: 'Middlemen Garage',
               fontSize: 36,
             ),
             const AppBarTitle(
@@ -67,8 +63,8 @@ class AboutUsPage extends StatelessWidget {
               fontSize: 16,
             ),
             const AppBarTitle(
-              leadingTitle: 'MAD ',
-              trailingTitle: 'Team 4',
+              leadingTitle: 'Michael ',
+              trailingTitle: 'Ofori',
               fontSize: 20,
             ),
             const SizedBox(
