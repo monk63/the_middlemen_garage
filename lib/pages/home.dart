@@ -1,4 +1,18 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:the_middlemen_garage/main.dart';
+import 'package:the_middlemen_garage/pages/about_us_page.dart';
+import 'package:the_middlemen_garage/pages/messages.dart';
+import 'package:the_middlemen_garage/pages/profile.dart';
+
+import '../model/user_model.dart';
+import 'login_screen.dart';
+
+final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+_signOut() async {
+  await _firebaseAuth.signOut();
+}
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -9,8 +23,15 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
 
-bool homeColor = true;
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  bool homeColor = true;
 
   bool cartColor = false;
 
@@ -20,31 +41,41 @@ bool homeColor = true;
 
   bool logOut = false;
 
-Widget _myDrawer() {
+  Widget _myDrawer() {
     return Drawer(
       child: ListView(
         children: <Widget>[
           UserAccountsDrawerHeader(
-            decoration: const BoxDecoration(color: Color(0xfff2f2f2)),
+            decoration:
+                const BoxDecoration(color: Color.fromARGB(255, 190, 61, 61)),
             accountName: Text(
-              "Michael Odori",
+              user!.displayName ?? "user name",
               style: const TextStyle(color: Colors.black),
             ),
             accountEmail: Text(
-              "michael@gmail.con",
-              style: const TextStyle(color: Colors.black),
+              user!.email!,
+              style: TextStyle(
+                color: Colors.black54,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
           ListTile(
             selected: homeColor,
             onTap: () {
-              setState(() {
-                homeColor = true;
-                cartColor = false;
-                aboutColor = false;
-                contactUsColor = false;
-                logOut = false;
-              });
+              setState(
+                () {
+                  homeColor = true;
+                  cartColor = false;
+                  aboutColor = false;
+                  contactUsColor = false;
+                  logOut = false;
+                },
+              );
+               Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MyStatefulWidget()),
+              );
             },
             leading: const Icon(Icons.home),
             title: const Text("Home"),
@@ -52,21 +83,23 @@ Widget _myDrawer() {
           ListTile(
             selected: cartColor,
             onTap: () {
-              setState(() {
-                cartColor = true;
-                homeColor = false;
-                aboutColor = false;
-                contactUsColor = false;
-                logOut = false;
-              });
+              setState(
+                () {
+                  cartColor = true;
+                  homeColor = false;
+                  aboutColor = false;
+                  contactUsColor = false;
+                  logOut = false;
+                },
+              );
 
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => Update()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Messages()),
+              );
             },
-            leading: const Icon(Icons.account_circle_outlined),
-            title: const Text("Update Info"),
+            leading: const Icon(Icons.message_outlined),
+            title: const Text("Messages"),
           ),
           ListTile(
             selected: aboutColor,
@@ -80,7 +113,10 @@ Widget _myDrawer() {
                   logOut = false;
                 },
               );
-              // Navigator.pushNamed(context, "/profile");
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AboutUsPage()),
+              );
             },
             leading: const Icon(Icons.info),
             title: const Text("About"),
@@ -88,33 +124,37 @@ Widget _myDrawer() {
           ListTile(
             selected: contactUsColor,
             onTap: () {
-              setState(() {
-                contactUsColor = true;
-                homeColor = false;
-                cartColor = false;
-                aboutColor = false;
-                logOut = false;
-              });
-              Navigator.pushNamed(context, "/contactus");
+              setState(
+                () {
+                  contactUsColor = true;
+                  homeColor = false;
+                  cartColor = false;
+                  aboutColor = false;
+                  logOut = false;
+                },
+              );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Profile()),
+              );
             },
-            leading: const Icon(Icons.phone),
-            title: const Text("Contact"),
+            leading: const Icon(Icons.contact_page_outlined),
+            title: const Text("Profile"),
           ),
-          ListTile(
-            selected: logOut,
-            onTap: () {
-              setState(() {
-                logOut = true;
-                homeColor = false;
-                cartColor = false;
-                aboutColor = false;
-                contactUsColor = false;
-              });
-              // Navigator.pushNamed(context, "/login");
-            },
-            leading: const Icon(Icons.exit_to_app),
-            title: const Text("Logout"),
-          ),
+           ListTile(
+              leading: const Icon(Icons.logout),
+              title: const Text("Log out"),
+              onTap: () async {
+                await _signOut();
+                if (_firebaseAuth.currentUser == null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const LoginScreen()),
+                  );
+                }
+              },
+            ),
         ],
       ),
     );
@@ -123,38 +163,34 @@ Widget _myDrawer() {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key:_key,
+      key: _key,
       appBar: AppBar(
-      title: const Text(
-        "Rojo's Shop",
-        style: TextStyle(color: Colors.black),
-      ),
-      centerTitle: true,
-      elevation: 0.1,
-      backgroundColor: Colors.grey[100],
-      leading: IconButton(
-        icon: const Icon(
-          Icons.menu,
-          color: Colors.black,
+        title: const Text(
+          "The Middlemen Garage",
+          style: TextStyle(color: Colors.black),
         ),
-        onPressed: () {
-          _key.currentState?.openDrawer();
-        },
+        centerTitle: true,
+        elevation: 0.1,
+        backgroundColor: Color.fromARGB(255, 182, 58, 58),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.menu,
+            color: Colors.black,
+          ),
+          onPressed: () {
+            _key.currentState?.openDrawer();
+          },
+        ),
+        actions: <Widget>[
+          IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.search,
+                color: Colors.black,
+              )),
+        ],
       ),
-      actions: <Widget>[
-        IconButton(
-            onPressed: () {
-              
-            },
-            icon: const Icon(
-              Icons.search,
-              color: Colors.black,
-            )),
-  
-      ],
-    ),
-    drawer: _myDrawer(),
+      drawer: _myDrawer(),
     );
-
   }
 }

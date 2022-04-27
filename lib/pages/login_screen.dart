@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -28,23 +29,22 @@ class _LoginScreenState extends State<LoginScreen> {
 
   // string for displaying the error Message
   String? errorMessage;
-@override
-void initState() {
-super.initState();
-if(_auth.currentUser!=null) {
+  @override
+  void initState() {
+    super.initState();
+    if (_auth.currentUser != null) {
+      print("Already login");
 
-    print("Already login");
+      Future(() {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => MyStatefulWidget()));
+      });
+    }
+  }
 
-Future((){
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> MyStatefulWidget()));
-});
-
-}
-}
   @override
   Widget build(BuildContext context) {
- 
-    //Email field              
+    //Email field
     final emailField = TextFormField(
       autofocus: false,
       controller: emailController,
@@ -121,9 +121,9 @@ Future((){
         ),
       ),
     );
-
+  
     //Screen
-     return Scaffold(
+    return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
         child: SingleChildScrollView(
@@ -137,12 +137,21 @@ Future((){
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
+                    // Positioned(
+                    //   top: 0,
+                    //   left: 0,
+                    //   child: Image.asset(
+                    //     "assets/images/top.png",
+                    //     width: size.width * 0.35,
+                    //   ),
+                    // ),
                     SizedBox(
-                        height: 200,
-                        child: Image.asset(
-                          "assets/images/splash.png",
-                          fit: BoxFit.contain,
-                        ),),
+                      height: 200,
+                      child: Image.asset(
+                        "assets/images/splash.png",
+                        fit: BoxFit.contain,
+                      ),
+                    ),
                     SizedBox(height: 45),
                     emailField,
                     SizedBox(height: 25),
@@ -152,7 +161,7 @@ Future((){
                     SizedBox(height: 15),
                     //google signin
                     GoogleSignIn(),
-                 
+
                     //Sign up
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -184,7 +193,6 @@ Future((){
         ),
       ),
     );
-    
   }
 
   // login function
@@ -233,4 +241,3 @@ Future((){
     }
   }
 }
-

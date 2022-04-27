@@ -27,12 +27,13 @@ class Splash extends StatelessWidget {
       duration: 4000,
       imageSize: 150,
       imageSrc: 'assets/images/splash.png',
-      text: "The Middlemen Garage",
+      text: "The Middlemen",
       textType: TextType.NormalText,
       textStyle: TextStyle(
+        color: Color.fromARGB(255, 42, 23, 207),
         fontSize: 30.0,
       ),
-      backgroundColor: Color.fromARGB(255, 68, 32, 32),
+      backgroundColor: Color.fromARGB(255, 14, 13, 13),
     );
 
     return MaterialApp(

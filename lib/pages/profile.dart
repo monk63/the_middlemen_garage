@@ -19,12 +19,7 @@ class _ProfileState extends State<Profile> {
   @override
   void initState() {
     super.initState();
-    // FirebaseFirestore.instance.collection("users").doc(user!.uid).get().then(
-    //   (value) {
-    //     this.loggedInUser = UserModel.fromMap(value.data());
-    //     setState(() {});
-    //   },
-    // );
+  
   }
 
   @override
