@@ -2,17 +2,24 @@
 //References : https://www.youtube.com/watch?v=1k-gITZA9CI&t=851s
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
-import 'package:the_middlemen_garage/Components/google_sign_in.dart';
 import 'package:the_middlemen_garage/pages/login_screen.dart';
 import 'package:the_middlemen_garage/pages/messages.dart';
+import 'package:the_middlemen_garage/pages/onboarding.dart';
 import 'package:the_middlemen_garage/pages/profile.dart';
 import 'pages/home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+int? initScreen;
+String? email;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  initScreen = prefs.getInt("initScreen");
+  email = prefs.getString("email");
+  await prefs.setInt("initScreen", 1);
 
   runApp(Splash());
 }
@@ -23,7 +30,7 @@ class Splash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget example1 = SplashScreenView(
-      navigateRoute: const LoginScreen(),
+      navigateRoute: const Onboarding(),
       duration: 4000,
       imageSize: 150,
       imageSrc: 'assets/images/splash.png',
@@ -39,9 +46,8 @@ class Splash extends StatelessWidget {
     return MaterialApp(
       title: 'Splash screen Demo',
       theme: ThemeData(
-    
-    fontFamily: 'Roboto',
-  ),
+        fontFamily: 'Roboto',
+      ),
       home: example1,
     );
   }
@@ -52,19 +58,18 @@ class MyApp extends StatelessWidget {
   static const String _title = 'The Garage';
   // This widget is the root of the application.
   @override
-  Widget build(BuildContext context) =>
-    MaterialApp(
-      title: _title,
-       theme: ThemeData(
-    
-    fontFamily: 'Roboto',
-  ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const MyStatefulWidget(),
-      },
-    );
-  
+  Widget build(BuildContext context) => MaterialApp(
+        title: _title,
+        theme: ThemeData(
+          fontFamily: 'Roboto',
+        ),
+        initialRoute: initScreen == 0 || initScreen == null ? '/onboard' : '/',
+        routes: {
+          '/': (context) => const MyStatefulWidget(),
+          '/onboard': (context) => const Onboarding(),
+          '/login': (context) => const LoginScreen(),
+        },
+      );
 }
 
 class MyStatefulWidget extends StatefulWidget {
@@ -82,11 +87,13 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   ];
   int currentIndex = 0;
   void onTap(int index) {
-    setState(() {
-      currentIndex = index;
-    });
+    setState(
+      () {
+        currentIndex = index;
+      },
+    );
   }
- 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

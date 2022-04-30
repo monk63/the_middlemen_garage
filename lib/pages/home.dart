@@ -4,7 +4,6 @@ import 'package:the_middlemen_garage/main.dart';
 import 'package:the_middlemen_garage/pages/about_us_page.dart';
 import 'package:the_middlemen_garage/pages/messages.dart';
 import 'package:the_middlemen_garage/pages/profile.dart';
-
 import '../model/user_model.dart';
 import 'login_screen.dart';
 
@@ -189,6 +188,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Colors.black,
               )),
         ],
+        automaticallyImplyLeading: false,
       ),
       drawer: _myDrawer(),
     );

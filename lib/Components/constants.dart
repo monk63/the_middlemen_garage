@@ -5,3 +5,4 @@ const String mailUrl = 'mailto:mail@example.com?subject=&body=';
 const String sharedPrefTodoListKey = 'SharedData';
 const String sharedDarkModeKey = 'isDarkModeEnabled';
 const String emptyJsonStringData = '{"data": []}';
+

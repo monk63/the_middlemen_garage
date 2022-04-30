@@ -27,10 +27,8 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Profile"),
-
         automaticallyImplyLeading: false,
         // centerTitle: true,
-
         actions: <Widget>[
           IconButton(
             icon: const Icon(
