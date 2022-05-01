@@ -90,7 +90,7 @@ class _OnboardingState extends State<Onboarding> {
       desc: 'discover people',
     ),
     _SliderModel(
-      imageAssetPath: SvgPicture.asset('assets/icons/s1.svg',
+      imageAssetPath: SvgPicture.asset('assets/icons/s4.svg',
       
       width: size.width * 0.8,
       height: size.height *0.5,
