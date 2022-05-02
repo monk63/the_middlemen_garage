@@ -1,22 +1,21 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:the_middlemen_garage/Components/firebase_services.dart';
 import 'package:the_middlemen_garage/Components/validation_services.dart';
 import 'package:the_middlemen_garage/model/user_model.dart';
 import 'package:the_middlemen_garage/pages/home.dart';
 import 'package:the_middlemen_garage/widgets/widgets.dart';
 
-
 class uploadCars extends StatefulWidget {
-  const uploadCars({ Key? key }) : super(key: key);
+  const uploadCars({Key? key}) : super(key: key);
 
   @override
   State<uploadCars> createState() => _uploadCarsState();
 }
 
 class _uploadCarsState extends State<uploadCars> {
-   final _formKey = GlobalKey<FormState>();
-
+  final _formKey = GlobalKey<FormState>();
 
   //values from text field
   TextEditingController _modelNameController = TextEditingController();
@@ -26,37 +25,37 @@ class _uploadCarsState extends State<uploadCars> {
   TextEditingController _phoneNumber = TextEditingController();
   TextEditingController _amount = TextEditingController();
 
-
-  VehicleUser owner = VehicleUser();
-  List<File> files=[];
+ 
+  List<File> files = [];
 
   //fecting the file
-   Future<void> _pickImage() async {
-    final List<XFile>  selected = await ImagePicker().pickMultiImage() ?? [];
-    if (selected.isNotEmpty){
+  Future<void> _pickImage() async {
+    final List<XFile> selected = await ImagePicker().pickMultiImage() ?? [];
+    if (selected.isNotEmpty) {
       setState(() {
-        files.addAll(List.generate(selected.length, (index) => File(selected[index].path)));
+        files.addAll(List.generate(
+            selected.length, (index) => File(selected[index].path)));
       });
-
     }
   }
 
- 
+  FirebaseCloud firebaseCloud = FirebaseCloud();
+
   void _clear() {
     setState(() {
       files = [];
     });
   }
 
-    void initVehicleUser() {
-    owner.modelName = _modelNameController.text;
-    owner.vehicleNumber = _vehicleNumberController.text;
-    owner.ownerName = _ownerNameController.text;
-    owner.color = _colorController.text;
-    owner.phoneNumber = _phoneNumber.text;
-    owner.hasCompletedRegistration = true;
-    owner.amount = _amount.text;
-  }
+  //   void initVehicleUser() {
+  //   owner.modelName = _modelNameController.text;
+  //   owner.vehicleNumber = _vehicleNumberController.text;
+  //   owner.ownerName = _ownerNameController.text;
+  //   owner.color = _colorController.text;
+  //   owner.phoneNumber = _phoneNumber.text;
+  //   owner.hasCompletedRegistration = true;
+  //   owner.amount = _amount.text;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -82,16 +81,24 @@ class _uploadCarsState extends State<uploadCars> {
                         ? Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              ClipRRect(
+                              SizedBox(
+                                child: ListView.builder(
+                                  itemCount: files.length,
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context,index) => ClipRRect(
                                 borderRadius: BorderRadius.circular(5),
                                 child: Container(
                                   width: MediaQuery.of(context).size.width - 20,
                                   child: Image.file(
-                                    files[0],
+                                    files[index],
                                     fit: BoxFit.fitWidth,
                                   ),
                                 ),
+                              )
+                                  ),
+                                height: MediaQuery.of(context).size.height * 0.1,
                               ),
+                              
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
@@ -132,7 +139,7 @@ class _uploadCarsState extends State<uploadCars> {
                     ),
                     TextFormField(
                       decoration: InputDecoration(hintText: 'Model Name'),
-                     obscureText: false,
+                      obscureText: false,
                       validator: ValidationService().modelNameValidator,
                       controller: _modelNameController,
                     ),
@@ -141,8 +148,7 @@ class _uploadCarsState extends State<uploadCars> {
                     ),
                     TextFormField(
                       decoration: InputDecoration(hintText: 'Vechile NUmber'),
-                     obscureText: false,
-                     
+                      obscureText: false,
                       validator: ValidationService().vehicleNumberValidator,
                       controller: _vehicleNumberController,
                     ),
@@ -151,7 +157,7 @@ class _uploadCarsState extends State<uploadCars> {
                     ),
                     TextFormField(
                       decoration: InputDecoration(hintText: 'Owner Name'),
-                     obscureText: false,
+                      obscureText: false,
                       validator: ValidationService().ownerNameValidator,
                       controller: _ownerNameController,
                     ),
@@ -160,7 +166,7 @@ class _uploadCarsState extends State<uploadCars> {
                     ),
                     TextFormField(
                       decoration: InputDecoration(hintText: 'Car Color'),
-                     obscureText: false,
+                      obscureText: false,
                       validator: ValidationService().colorValidator,
                       controller: _colorController,
                     ),
@@ -169,7 +175,7 @@ class _uploadCarsState extends State<uploadCars> {
                     ),
                     TextFormField(
                       decoration: InputDecoration(hintText: 'Phone Number'),
-                     obscureText: false,
+                      obscureText: false,
                       validator: ValidationService().phoneNumberValidator,
                       controller: _phoneNumber,
                     ),
@@ -178,7 +184,7 @@ class _uploadCarsState extends State<uploadCars> {
                     ),
                     TextFormField(
                       decoration: InputDecoration(hintText: 'Price'),
-                     obscureText: false,
+                      obscureText: false,
                       controller: _amount,
                     ),
                     SizedBox(
@@ -187,23 +193,31 @@ class _uploadCarsState extends State<uploadCars> {
                     GestureDetector(
                       onTap: () async {
                         ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Processing')));
-                        initVehicleUser();
-                        String isComplete =
-                            await firebaseFunctions.uploadVehicleInfo(
-                                owner.toMap(), imageFile, context);
-                        if (isComplete == 'true') {
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return HomeScreen();
-                              },
-                            ),
+                          SnackBar(
+                            content: Text('Processing'),
+                          ),
+                        );
+                         VehicleUser owner =VehicleUser(
+                          modelName: _modelNameController.text,
+                          vehicleNumber: _vehicleNumberController.text,
+                          ownerName: _ownerNameController.text,
+                          color: _colorController.text,
+                          vehicleImg: [],
+                          phoneNumber: _phoneNumber.text,
+                          amount: double.parse(_amount.text),
+                        );
+                        //uploading to firebase then redirect
+                        bool isComplete =
+                            await firebaseCloud.uploadVehicleInfo(
+                                 owner.toMap(), files, context);
+                        if (isComplete ) {
+                           Navigator.pop (
+                            context                           
+                            
                           );
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(isComplete)));
+                              SnackBar(content: Text('Upload failed')));
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -229,7 +243,5 @@ class _uploadCarsState extends State<uploadCars> {
         },
       ),
     );
-    
-   
   }
 }

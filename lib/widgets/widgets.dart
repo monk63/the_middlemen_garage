@@ -133,13 +133,7 @@ class InputTextField extends StatelessWidget {
           icon: icon,
           labelText: label,
         ),
-        onSaved: (String value) {
-          // This optional block of code can be used to run
-          // code when the user saves the form.
-        },
-        validator: (String value) {
-          return value.length < 4 ? 'Enter a valid Email-Id' : null;
-        },
+       
       ),
     );
   }

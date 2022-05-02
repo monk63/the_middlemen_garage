@@ -54,6 +54,9 @@ dependencies:
   shared_preferences: ^2.0.13
   onboarding_screen: ^0.0.3
   image_picker: ^0.8.5
+  firebase_storage: ^10.2.14
+  path: ^1.8.0
+  uuid: ^3.0.6
 
 flutter_app_name:
   name: "Garage"

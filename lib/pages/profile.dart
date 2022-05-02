@@ -26,27 +26,9 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Profile"),
-       // automaticallyImplyLeading: false,
-        // centerTitle: true,
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(
-              Icons.settings,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SettingsPage()),
-              );
-            },
-          )
-        ],
-      ),
-      body: Center(
+    return Container(
+  
+      child: Center(
         child: Padding(
           padding: EdgeInsets.all(20),
           child: Column(

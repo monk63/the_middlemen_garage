@@ -10,11 +10,8 @@ class Messages extends StatefulWidget {
 class _MessagesState extends State<Messages> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Messages'),
-        automaticallyImplyLeading: false,
-      ),
+    return Container(
+      
     );
   }
 }
