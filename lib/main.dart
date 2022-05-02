@@ -3,24 +3,14 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
-import 'package:the_middlemen_garage/pages/login_screen.dart';
 import 'package:the_middlemen_garage/pages/messages.dart';
 import 'package:the_middlemen_garage/pages/onboarding.dart';
 import 'package:the_middlemen_garage/pages/profile.dart';
 import 'pages/home.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-int? initScreen;
-String? email;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  initScreen = prefs.getInt("initScreen");
-  email = prefs.getString("email");
-  await prefs.setInt("initScreen", 1);
-
+  await Firebase.initializeApp(); 
   runApp(Splash());
 }
 
@@ -59,16 +49,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of the application.
   @override
   Widget build(BuildContext context) => MaterialApp(
+    debugShowCheckedModeBanner: false,
         title: _title,
         theme: ThemeData(
           fontFamily: 'Roboto',
         ),
-        initialRoute: initScreen == 0 || initScreen == null ? '/onboard' : '/',
-        routes: {
-          '/': (context) => const MyStatefulWidget(),
-          '/onboard': (context) => const Onboarding(),
-          '/login': (context) => const LoginScreen(),
-        },
       );
 }
 

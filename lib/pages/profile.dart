@@ -22,12 +22,14 @@ class _ProfileState extends State<Profile> {
   
   }
 
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Profile"),
-        automaticallyImplyLeading: false,
+       // automaticallyImplyLeading: false,
         // centerTitle: true,
         actions: <Widget>[
           IconButton(

@@ -18,21 +18,15 @@ class SettingsPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(title: Text('Settings')),
-      
       body: Container(
-       
         child: Column(
-          
           mainAxisAlignment: MainAxisAlignment.start,
-    
           //Login out
           children: [
-             
             ListTile(
-                leading: const Icon(CarbonIcons.enterprise),
+              leading: const Icon(CarbonIcons.enterprise),
               title: const Text("About Us"),
-              onTap: ()  {
-                
+              onTap: () {
                 {
                   Navigator.push(
                     context,
@@ -41,13 +35,11 @@ class SettingsPage extends StatelessWidget {
                   );
                 }
               },
-              
             ),
-                ListTile(
-                leading: const Icon(CarbonIcons.information),
+            ListTile(
+              leading: const Icon(CarbonIcons.information),
               title: const Text("Instructions"),
-              onTap: ()  {
-                
+              onTap: () {
                 {
                   Navigator.push(
                     context,
@@ -56,7 +48,6 @@ class SettingsPage extends StatelessWidget {
                   );
                 }
               },
-              
             ),
             const Spacer(),
             ListTile(

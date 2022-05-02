@@ -4,6 +4,7 @@ import 'package:the_middlemen_garage/main.dart';
 import 'package:the_middlemen_garage/pages/about_us_page.dart';
 import 'package:the_middlemen_garage/pages/messages.dart';
 import 'package:the_middlemen_garage/pages/profile.dart';
+import 'package:the_middlemen_garage/pages/upload_cars.dart';
 import '../model/user_model.dart';
 import 'login_screen.dart';
 
@@ -31,13 +32,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   bool homeColor = true;
-
   bool cartColor = false;
-
   bool aboutColor = false;
-
   bool contactUsColor = false;
-
   bool logOut = false;
 
   Widget _myDrawer() {
@@ -114,11 +111,11 @@ class _HomeScreenState extends State<HomeScreen> {
               );
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AboutUsPage()),
+                MaterialPageRoute(builder: (context) => uploadCars()),
               );
             },
-            leading: const Icon(Icons.info),
-            title: const Text("About"),
+            leading: const Icon(Icons.upload_rounded),
+            title: const Text("Upload Cars"),
           ),
           ListTile(
             selected: contactUsColor,
