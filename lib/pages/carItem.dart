@@ -1,13 +1,10 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:the_middlemen_garage/model/user_model.dart';
 
 class CarItem extends StatefulWidget {
   final VehicleUser? carDetails;
   final void Function() press;
-
-  
 
 const CarItem(
   {Key? key,  this.carDetails, required this.press}) : super(key: key);
@@ -43,7 +40,7 @@ class _CarItemState extends State<CarItem> {
                 text: TextSpan(
                   children: [
                     TextSpan(
-                      text: '{widget.carDetails.type}\n',
+                      text: 'Benz',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 22,
@@ -51,7 +48,7 @@ class _CarItemState extends State<CarItem> {
                       )
                     ),
                     TextSpan(
-                        text: '{widget.carDetails.name}\n',
+                        text: '\nBenz c300',
                         style: TextStyle(
                           color: Colors.white,
                           letterSpacing: 1.1
@@ -69,6 +66,7 @@ class _CarItemState extends State<CarItem> {
                 tag: Random().nextInt(1000000),
                 // tag: 'widget.carDetails.id',
                 child: Placeholder(fallbackHeight: 220),
+                // child: Image.asset('assets/images/splash.png'),
                 // child: Image.asset('{widget.carDetails.imageUrl}',width: 220,),
               )
           ),
