@@ -67,7 +67,7 @@ class FirebaseCloud {
 final Reference  ref = storage.ref(currentUser.uid).child("images/");
 List<UploadTask> futures = [];
 for (File file in localFile){
-  futures.add(ref.putFile(file));
+  futures.add(ref.child(DateTime.now().microsecondsSinceEpoch.toString()).putFile(file));
   //  e = await ref.putFile(file);
 }
 
@@ -85,6 +85,36 @@ for (TaskSnapshot path in imageResults)
    
    print("data two $data");
   await FirebaseFirestore.instance.collection('cars').doc().set(data);
+
+
+      return true;
+  }
+
+  Future<bool> editVehicleInfo(Map<String, dynamic> data, List<File> localFile, BuildContext context) async {
+ FirebaseStorage storage = FirebaseStorage.instance;
+  User currentUser = FirebaseAuth.instance.currentUser!;
+final Reference  ref = storage.ref(currentUser.uid).child("images/");
+List<UploadTask> futures = [];
+for (File file in localFile){
+  futures.add(ref.child(DateTime.now().microsecondsSinceEpoch.toString()).putFile(file));
+  //  e = await ref.putFile(file);
+}
+
+   List<TaskSnapshot> imageResults = await Future.wait(futures);
+
+   print("data one $data");
+List<String> image = [];
+
+for (TaskSnapshot path in imageResults)
+{
+  String string = await path.ref.getDownloadURL();
+  image.add( string);
+}
+   data["vehicleImg"] = image;
+   
+   print("data two $data");
+   QuerySnapshot<Map<String, dynamic>> reference = await FirebaseFirestore.instance.collection("cars").where("vehicleNumber", isEqualTo: data["vehicleNumber"]).get();
+   await reference.docs.first.reference.update(data);
 
 
       return true;

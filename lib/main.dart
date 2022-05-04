@@ -1,3 +1,8 @@
+/**
+ * @author Michael Ofori
+ */
+
+
 //References : https://github.com/backslashflutter/email_password_flutter_firebase/tree/main/lib
 //References : https://www.youtube.com/watch?v=1k-gITZA9CI&t=851s
 import 'package:firebase_auth/firebase_auth.dart';
@@ -40,6 +45,7 @@ class Splash extends StatelessWidget {
 
     return MaterialApp(
       title: 'Splash screen Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'Roboto',
       ),

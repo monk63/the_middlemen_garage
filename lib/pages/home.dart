@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:the_middlemen_garage/main.dart';
@@ -26,12 +27,25 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Container(
-       child: Column(
+      child: StreamBuilder<QuerySnapshot<Map<String,dynamic>>>(
+        stream: FirebaseFirestore.instance
+        .collection('cars').snapshots(),
+        builder: (context,snapshot){
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+
+            }else{
+
+              
+              List<DocumentSnapshot<Map<String,dynamic>>> docs =
+                  snapshot.hasData ? snapshot.data!.docs : [];
+
+       return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
         
@@ -40,28 +54,27 @@ class _HomeScreenState extends State<HomeScreen> {
           
             Expanded(
               child: ListView.builder(
+                itemCount: docs.length,
                 itemBuilder: (context, i) => Padding(
+
                   padding: EdgeInsets.symmetric(horizontal: 15),
+                  //car carousel
                   child: CarItem(
-                    // carDetails: ve[i],
-                    press: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => details(
-                            // carDetails: carDetails[i],
-                          )
-                        )
-                      );
-                    },
+                    carDetails: VehicleUser.fromMap(docs[i].data()!),
+                   
                   ),
                 ),
                 // itemCount: carDetails.length,
-                scrollDirection: Axis.horizontal,
+                // scrollDirection: Axis.horizontal,
             )
             ),
             Text('Top Delars'),
           ]
-       )  
+            
+       ); 
+            }
+        }
+      ),
        );
   }
 }

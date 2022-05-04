@@ -32,7 +32,8 @@ class VehicleUser {
   String vehicleNumber;
   String ownerName;
   String color;
-  List <String> vehicleImg;
+  String ownerId;
+  List <dynamic> vehicleImg;
   String phoneNumber;
   bool hasCompletedRegistration = false;
   double amount;
@@ -40,6 +41,7 @@ class VehicleUser {
 
   VehicleUser({
     required this.modelName,
+    required this.ownerId,
     required this.vehicleNumber,
     required this.ownerName,
     required this.color,
@@ -51,6 +53,7 @@ class VehicleUser {
   });
 
   Map<String, dynamic> toMap() {
+    
     return {
       'modelName': modelName,
       'vehicleNumber': vehicleNumber,
@@ -60,6 +63,8 @@ class VehicleUser {
       'aadharNumber': phoneNumber,
       'hasCompletedRegistration': hasCompletedRegistration,
       'amount': amount,
+      "phoneNUmber" : phoneNumber,
+      "ownerId" : ownerId
       // 'ownerEmail': ownerEmail
     };
   }
@@ -71,8 +76,9 @@ class VehicleUser {
        ownerName: data["ownerName"], 
        color: data["color"], 
        vehicleImg: data["vehicleImg"],
-        phoneNumber: data["phoneNUmber"],
+        phoneNumber: data["phoneNUmber"] ?? "",
          amount: data["amount"],
+         ownerId: data["ownerId"] ?? ""
           // ownerEmail: data["ownerEmail"]
           );
   }

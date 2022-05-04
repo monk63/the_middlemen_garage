@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:the_middlemen_garage/Components/firebase_services.dart';
@@ -8,7 +9,8 @@ import 'package:the_middlemen_garage/pages/home.dart';
 import 'package:the_middlemen_garage/widgets/widgets.dart';
 
 class uploadCars extends StatefulWidget {
-  const uploadCars({Key? key}) : super(key: key);
+  final VehicleUser? edit;
+  const uploadCars({Key? key, this.edit } ) : super(key: key);
 
   @override
   State<uploadCars> createState() => _uploadCarsState();
@@ -45,6 +47,22 @@ class _uploadCarsState extends State<uploadCars> {
     setState(() {
       files = [];
     });
+  }
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if ( widget.edit != null){
+      
+      _modelNameController.text = widget.edit!.modelName;
+      _vehicleNumberController.text = widget.edit!.vehicleNumber;
+   _ownerNameController.text = widget.edit!.ownerName;
+   _colorController.text = widget.edit!.color;
+   _phoneNumber.text = widget.edit!.phoneNumber;
+   _amount.text = widget.edit!.amount.toString();
+    }
   }
 
   //   void initVehicleUser() {
@@ -203,13 +221,18 @@ class _uploadCarsState extends State<uploadCars> {
                           ownerName: _ownerNameController.text,
                           color: _colorController.text,
                           vehicleImg: [],
+                          ownerId: FirebaseAuth.instance.currentUser!.uid,
                           phoneNumber: _phoneNumber.text,
                           amount: double.parse(_amount.text),
                         );
                         //uploading to firebase then redirect
-                        bool isComplete =
-                            await firebaseCloud.uploadVehicleInfo(
+                        bool isComplete = false;
+                        if (widget.edit == null ){
+                            isComplete = await firebaseCloud.uploadVehicleInfo(
                                  owner.toMap(), files, context);
+                                 } else {
+                            isComplete = await firebaseCloud.editVehicleInfo(
+                                 owner.toMap(), files, context);}
                         if (isComplete ) {
                            Navigator.pop (
                             context                           
