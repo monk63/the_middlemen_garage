@@ -65,10 +65,13 @@ class _CarItemState extends State<CarItem> {
                 IconButton(
                   icon: Icon(Icons.arrow_forward, size: 20),
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
                         builder: (context) => details(
-                              carDetails: widget.carDetails,
-                            )));
+                          carDetails: widget.carDetails,
+                        ),
+                      ),
+                    );
                   },
                 ),
               ],
