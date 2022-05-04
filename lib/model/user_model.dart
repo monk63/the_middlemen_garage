@@ -33,11 +33,10 @@ class VehicleUser {
   String ownerName;
   String color;
   String ownerId;
-  List <dynamic> vehicleImg;
+  List<dynamic> vehicleImg;
   String phoneNumber;
   bool hasCompletedRegistration = false;
   double amount;
-  // String ownerEmail;
 
   VehicleUser({
     required this.modelName,
@@ -49,37 +48,32 @@ class VehicleUser {
     required this.phoneNumber,
     this.hasCompletedRegistration = false,
     required this.amount,
-    // required this.ownerEmail,
   });
 
   Map<String, dynamic> toMap() {
-    
     return {
       'modelName': modelName,
       'vehicleNumber': vehicleNumber,
       'ownerName': ownerName,
       'color': color,
-      'vehicleImg' : vehicleImg,
+      'vehicleImg': vehicleImg,
       'aadharNumber': phoneNumber,
       'hasCompletedRegistration': hasCompletedRegistration,
       'amount': amount,
-      "phoneNUmber" : phoneNumber,
-      "ownerId" : ownerId
-      // 'ownerEmail': ownerEmail
+      "phoneNUmber": phoneNumber,
+      "ownerId": ownerId
     };
   }
 
   factory VehicleUser.fromMap(Map<String, dynamic> data) {
     return VehicleUser(
-      modelName: data["modelName"], 
-      vehicleNumber: data["vehicleNumber"],
-       ownerName: data["ownerName"], 
-       color: data["color"], 
-       vehicleImg: data["vehicleImg"],
+        modelName: data["modelName"],
+        vehicleNumber: data["vehicleNumber"],
+        ownerName: data["ownerName"],
+        color: data["color"],
+        vehicleImg: data["vehicleImg"],
         phoneNumber: data["phoneNUmber"] ?? "",
-         amount: data["amount"],
-         ownerId: data["ownerId"] ?? ""
-          // ownerEmail: data["ownerEmail"]
-          );
+        amount: data["amount"],
+        ownerId: data["ownerId"] ?? "");
   }
 }

@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:the_middlemen_garage/model/user_model.dart';
 import 'package:the_middlemen_garage/pages/details.dart';

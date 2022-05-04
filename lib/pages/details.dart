@@ -6,20 +6,18 @@ import 'package:the_middlemen_garage/widgets/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class details extends StatefulWidget {
-  const details({ Key? key, required this.carDetails }  ) : super(key: key);
+  const details({Key? key, required this.carDetails}) : super(key: key);
 
   final VehicleUser carDetails;
-  
+
   @override
   State<details> createState() => _detailsState();
 }
 
-
-
 class _detailsState extends State<details> {
   @override
   Widget build(BuildContext context) {
-   return Scaffold(
+    return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
@@ -94,7 +92,7 @@ class _detailsState extends State<details> {
                         helpText: 'Car Price',
                       ),
                       SpecificationWidget(
-                        text:   widget.carDetails.vehicleNumber.toString(),
+                        text: widget.carDetails.vehicleNumber.toString(),
                         helpText: 'Vin',
                       ),
                       // SpecificationWidget(
@@ -111,8 +109,7 @@ class _detailsState extends State<details> {
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: 
-                    [
+                    children: [
                       SpecificationWidget(
                         text: widget.carDetails.color.toString(),
                         helpText: "Car's Color",
@@ -133,50 +130,47 @@ class _detailsState extends State<details> {
             SizedBox(
               height: 100,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-              children: FirebaseAuth.instance.currentUser!.uid != widget.carDetails.ownerId 
-                    ? [] : [
-                Padding(
-                  padding: EdgeInsets.all(8),
-                  child: IconButton(onPressed: (){}, icon: Icon(Icons.delete)),
-                  ),
-                  
-                Padding(
-                  padding: EdgeInsets.all(8),
-                  child: IconButton(onPressed: ()
-                  {
-                     Navigator.push(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: FirebaseAuth.instance.currentUser!.uid !=
+                          widget.carDetails.ownerId
+                      ? []
+                      : [
+                          Padding(
+                            padding: EdgeInsets.all(8),
+                            child: IconButton(
+                                onPressed: () {}, icon: Icon(Icons.delete)),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(8),
+                            child: IconButton(
+                                onPressed: () {
+                                  Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => uploadCars(
                                         edit: widget.carDetails,
-                                        
-                                        
                                       ),
                                     ),
                                   );
                                   setState(() {});
-                    
-                  }, icon: Icon(Icons.edit)),
-                  ),
-              ]
-              ),
+                                },
+                                icon: Icon(Icons.edit)),
+                          ),
+                        ]),
             ),
             Padding(
               padding: EdgeInsets.all(20.0),
               child: GestureDetector(
                 onTap: () {
-                
-                try{
-                  launchUrl(Uri.parse("tel:${widget.carDetails.phoneNumber}"));
-                } catch (e){
-                  print("");
-                }
-                   
+                  try {
+                    launchUrl(
+                        Uri.parse("tel:${widget.carDetails.phoneNumber}"));
+                  } catch (e) {
+                    print("");
+                  }
                 },
                 child: CustomButton(
                   text: 'Contact',
-                  
                 ),
               ),
             ),

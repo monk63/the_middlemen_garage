@@ -5,12 +5,11 @@ import 'package:image_picker/image_picker.dart';
 import 'package:the_middlemen_garage/Components/firebase_services.dart';
 import 'package:the_middlemen_garage/Components/validation_services.dart';
 import 'package:the_middlemen_garage/model/user_model.dart';
-import 'package:the_middlemen_garage/pages/home.dart';
 import 'package:the_middlemen_garage/widgets/widgets.dart';
 
 class uploadCars extends StatefulWidget {
   final VehicleUser? edit;
-  const uploadCars({Key? key, this.edit } ) : super(key: key);
+  const uploadCars({Key? key, this.edit}) : super(key: key);
 
   @override
   State<uploadCars> createState() => _uploadCarsState();
@@ -27,7 +26,6 @@ class _uploadCarsState extends State<uploadCars> {
   TextEditingController _phoneNumber = TextEditingController();
   TextEditingController _amount = TextEditingController();
 
- 
   List<File> files = [];
 
   //fecting the file
@@ -49,31 +47,19 @@ class _uploadCarsState extends State<uploadCars> {
     });
   }
 
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    if ( widget.edit != null){
-      
+    if (widget.edit != null) {
       _modelNameController.text = widget.edit!.modelName;
       _vehicleNumberController.text = widget.edit!.vehicleNumber;
-   _ownerNameController.text = widget.edit!.ownerName;
-   _colorController.text = widget.edit!.color;
-   _phoneNumber.text = widget.edit!.phoneNumber;
-   _amount.text = widget.edit!.amount.toString();
+      _ownerNameController.text = widget.edit!.ownerName;
+      _colorController.text = widget.edit!.color;
+      _phoneNumber.text = widget.edit!.phoneNumber;
+      _amount.text = widget.edit!.amount.toString();
     }
   }
-
-  //   void initVehicleUser() {
-  //   owner.modelName = _modelNameController.text;
-  //   owner.vehicleNumber = _vehicleNumberController.text;
-  //   owner.ownerName = _ownerNameController.text;
-  //   owner.color = _colorController.text;
-  //   owner.phoneNumber = _phoneNumber.text;
-  //   owner.hasCompletedRegistration = true;
-  //   owner.amount = _amount.text;
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -101,22 +87,25 @@ class _uploadCarsState extends State<uploadCars> {
                             children: <Widget>[
                               SizedBox(
                                 child: ListView.builder(
-                                  itemCount: files.length,
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context,index) => ClipRRect(
-                                borderRadius: BorderRadius.circular(5),
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width - 20,
-                                  child: Image.file(
-                                    files[index],
-                                    fit: BoxFit.fitWidth,
-                                  ),
-                                ),
-                              )
-                                  ),
-                                height: MediaQuery.of(context).size.height * 0.1,
+                                    itemCount: files.length,
+                                    scrollDirection: Axis.horizontal,
+                                    itemBuilder: (context, index) => ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          child: Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width -
+                                                20,
+                                            child: Image.file(
+                                              files[index],
+                                              fit: BoxFit.fitWidth,
+                                            ),
+                                          ),
+                                        )),
+                                height:
+                                    MediaQuery.of(context).size.height * 0.1,
                               ),
-                              
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
@@ -215,7 +204,7 @@ class _uploadCarsState extends State<uploadCars> {
                             content: Text('Processing'),
                           ),
                         );
-                         VehicleUser owner =VehicleUser(
+                        VehicleUser owner = VehicleUser(
                           modelName: _modelNameController.text,
                           vehicleNumber: _vehicleNumberController.text,
                           ownerName: _ownerNameController.text,
@@ -227,17 +216,15 @@ class _uploadCarsState extends State<uploadCars> {
                         );
                         //uploading to firebase then redirect
                         bool isComplete = false;
-                        if (widget.edit == null ){
-                            isComplete = await firebaseCloud.uploadVehicleInfo(
-                                 owner.toMap(), files, context);
-                                 } else {
-                            isComplete = await firebaseCloud.editVehicleInfo(
-                                 owner.toMap(), files, context);}
-                        if (isComplete ) {
-                           Navigator.pop (
-                            context                           
-                            
-                          );
+                        if (widget.edit == null) {
+                          isComplete = await firebaseCloud.uploadVehicleInfo(
+                              owner.toMap(), files, context);
+                        } else {
+                          isComplete = await firebaseCloud.editVehicleInfo(
+                              owner.toMap(), files, context);
+                        }
+                        if (isComplete) {
+                          Navigator.pop(context);
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text('Upload failed')));
