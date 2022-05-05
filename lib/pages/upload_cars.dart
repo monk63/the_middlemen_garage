@@ -206,7 +206,9 @@ class _uploadCarsState extends State<uploadCars> {
                       height: 0.03 * deviceSize.height,
                     ),
                     TextFormField(
-                      decoration: InputDecoration(hintText: 'Vechile NUmber'),
+                      decoration: InputDecoration(hintText: 'Vechile Number'),
+                      keyboardType: TextInputType.number,
+                      maxLength: 13,
                       obscureText: false,
                       validator: ValidationService().vehicleNumberValidator,
                       controller: _vehicleNumberController,
@@ -234,6 +236,8 @@ class _uploadCarsState extends State<uploadCars> {
                     ),
                     TextFormField(
                       decoration: InputDecoration(hintText: 'Phone Number'),
+                      keyboardType: TextInputType.number,
+                      maxLength: 10,
                       obscureText: false,
                       validator: ValidationService().phoneNumberValidator,
                       controller: _phoneNumber,
@@ -243,6 +247,8 @@ class _uploadCarsState extends State<uploadCars> {
                     ),
                     TextFormField(
                       decoration: InputDecoration(hintText: 'Price'),
+                      keyboardType: TextInputType.number,
+                      maxLength: 6,
                       obscureText: false,
                       controller: _amount,
                     ),
