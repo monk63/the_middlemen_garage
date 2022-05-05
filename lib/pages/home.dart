@@ -39,7 +39,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   SizedBox(
                     height: 10,
                   ),
-                  Text('Choose a Car'),
+                  Center(
+                    child: Text(
+                      'Choose a Car',
+                      style: TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
                   Expanded(
                     child: ListView.builder(
                       itemCount: docs.length,
@@ -50,11 +58,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           carDetails: VehicleUser.fromMap(docs[i].data()!),
                         ),
                       ),
-                      // itemCount: carDetails.length,
-                      // scrollDirection: Axis.horizontal,
                     ),
                   ),
-                  
                 ],
               );
             }

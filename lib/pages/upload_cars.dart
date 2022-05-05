@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -28,7 +29,7 @@ class _uploadCarsState extends State<uploadCars> {
 
   List<File> files = [];
 
-  //fecting the file
+  //fetching the file
   Future<void> _pickImage() async {
     final List<XFile> selected = await ImagePicker().pickMultiImage() ?? [];
     if (selected.isNotEmpty) {
@@ -59,12 +60,63 @@ class _uploadCarsState extends State<uploadCars> {
       _phoneNumber.text = widget.edit!.phoneNumber;
       _amount.text = widget.edit!.amount.toString();
     }
+
+    AwesomeNotifications().isNotificationAllowed().then(
+      (isAllowed) {
+        if (!isAllowed) {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text('Allow Notifications'),
+              content:
+                  const Text('Our app would like to send you notifications'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    'Don\'t Allow',
+                    style: TextStyle(color: Colors.grey, fontSize: 18),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () => AwesomeNotifications()
+                      .requestPermissionToSendNotifications()
+                      .then((_) => Navigator.pop(context)),
+                  child: const Text(
+                    'Allow',
+                    style: TextStyle(
+                      color: Colors.teal,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    AwesomeNotifications().initialize(
+      'resource://drawable/splash',
+      [
+        NotificationChannel(
+          channelKey: 'basic_channel',
+          channelName: 'Basic Notifications',
+          defaultColor: Color.fromARGB(255, 202, 112, 9),
+          importance: NotificationImportance.High,
+          channelShowBadge: true,
+          channelDescription: '',
+        ),
+      ],
+    );
     Size deviceSize = MediaQuery.of(context).size;
-
     return Scaffold(
       body: Builder(
         builder: (context) {
@@ -204,6 +256,7 @@ class _uploadCarsState extends State<uploadCars> {
                             content: Text('Upload in progress'),
                           ),
                         );
+
                         VehicleUser owner = VehicleUser(
                           modelName: _modelNameController.text,
                           vehicleNumber: _vehicleNumberController.text,
@@ -214,6 +267,7 @@ class _uploadCarsState extends State<uploadCars> {
                           phoneNumber: _phoneNumber.text,
                           amount: double.parse(_amount.text),
                         );
+                       
                         //uploading to firebase then redirect
                         bool isComplete = false;
                         if (widget.edit == null) {
@@ -237,6 +291,13 @@ class _uploadCarsState extends State<uploadCars> {
                             ),
                           );
                         }
+                        await AwesomeNotifications().createNotification(
+                          content: NotificationContent(
+                              id: 10,
+                              channelKey: 'basic_channel',
+                              title: 'Middlemen',
+                              body: 'Car has been created successfully'),
+                        );
                       },
                       child: CustomButton(
                         text: 'Upload',

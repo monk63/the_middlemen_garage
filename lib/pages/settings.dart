@@ -17,11 +17,14 @@ class SettingsPage extends StatelessWidget {
     final user = FirebaseAuth.instance.currentUser!;
 
     return Scaffold(
-      appBar: AppBar(title: Text('Settings')),
+      appBar: AppBar(
+        title: Text('Settings'),
+        backgroundColor: Color.fromARGB(255, 182, 58, 58),
+      ),
       body: Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          //Login out
+          //Log out
           children: [
             ListTile(
               leading: const Icon(CarbonIcons.enterprise),

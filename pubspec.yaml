@@ -57,6 +57,7 @@ dependencies:
   firebase_storage: ^10.2.14
   path: ^1.8.0
   uuid: ^3.0.6
+  awesome_notifications: ^0.6.21
 
 flutter_app_name:
   name: "Garage"

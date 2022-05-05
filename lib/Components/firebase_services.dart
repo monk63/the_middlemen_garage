@@ -1,8 +1,10 @@
 import 'dart:io';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:the_middlemen_garage/model/user_model.dart';
 
 class FirebaseCloud {
@@ -19,7 +21,6 @@ class FirebaseCloud {
         .set(data)
         .then((_) => isUploaded = 'true')
         .catchError((e) => isUploaded = e.message);
-
     return isUploaded;
   }
 
@@ -62,12 +63,20 @@ class FirebaseCloud {
 
     print("data two $data");
     await FirebaseFirestore.instance.collection('cars').doc().set(data);
-
+    
+    Fluttertoast.showToast(
+        msg: "Car Has Been Created.",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Color.fromARGB(255, 194, 22, 22),
+        textColor: Colors.white,
+        fontSize: 16.0);
     return true;
   }
 
   Future<bool> editVehicleInfo(Map<String, dynamic> data, List<File> localFile,
-      BuildContext context) async {
+    BuildContext context) async {
     FirebaseStorage storage = FirebaseStorage.instance;
     User currentUser = FirebaseAuth.instance.currentUser!;
     final Reference ref = storage.ref(currentUser.uid).child("images/");
@@ -97,13 +106,20 @@ class FirebaseCloud {
         .get();
     await reference.docs.first.reference.update(data);
 
+    Fluttertoast.showToast(
+        msg: "Car has Edited\nPress back button",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 5,
+        backgroundColor: Color.fromARGB(255, 85, 194, 13),
+        textColor: Colors.white,
+        fontSize: 16.0);
     return true;
   }
 
-
-   //upload image
-  Future<bool> deleteVehicleInfo(BuildContext context,
-  Map<String, dynamic> data) async {
+  //upload image
+  Future<bool> deleteVehicleInfo(
+    BuildContext context, Map<String, dynamic> data) async {
     FirebaseStorage storage = FirebaseStorage.instance;
     User currentUser = FirebaseAuth.instance.currentUser!;
 
@@ -111,33 +127,18 @@ class FirebaseCloud {
     final Reference ref = storage.ref(currentUser.uid).child("images/");
     List<Future> futures = [];
     for (String url in data["vehicleImg"]) {
-      // https://firebasestorage.googleapis.com/v0/b/the-garage-5676d.appspot.com/o/qhZ5NfC5cRMxREwT0vprmGJEDNA2%2Fimages%2F1651754590650977?alt=media&token=8516668c-a269-4c86-a4a0-ec99f6cd12e4
-
       String path = url.split("?")[0].split("%").last;
       print("path ${ref.child(path).fullPath}");
       futures.add(ref.child(path).delete());
-
-
-      // futures.add(ref
-      //     .child(url.split("pattern")))
-      //     .putFile(file));
     }
 
-//deleting images
-    // await Future.wait(futures);
-
-    print("data one $data");
-
-    print("data two $data");
-
     //deleting file
-    QuerySnapshot<Map<String, dynamic>> e = await FirebaseFirestore.instance.collection('cars').where("vehicleNumber", isEqualTo: data["vehicleNumber"]).limit(1).get();
+    QuerySnapshot<Map<String, dynamic>> e = await FirebaseFirestore.instance
+        .collection('cars')
+        .where("vehicleNumber", isEqualTo: data["vehicleNumber"])
+        .limit(1)
+        .get();
     await e.docs.first.reference.delete();
-
     return true;
   }
-
-
-
-
 }

@@ -26,7 +26,6 @@ class _CarItemState extends State<CarItem> {
         child: Column(
           children: <Widget>[
              (widget.carDetails.vehicleImg.isNotEmpty) ?
-
               Image.network(widget.carDetails.vehicleImg[0])
             : Icon(Icons.image),
             SizedBox(
@@ -38,19 +37,23 @@ class _CarItemState extends State<CarItem> {
                 Column(
                   children: [
                     Text(
+                      'Price',
+                      style: TextStyle(fontSize: 10),
+                    ),
+                    Text(
                       '\$' + widget.carDetails.amount.toString(),
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                     ),
-                    Text(
-                      widget.carDetails.modelName,
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
-                    ),
+                    
                   ],
                 ),
                 Column(
                   children: [
+                     Text(
+                      'Car Brand',
+                      style: TextStyle(fontSize: 10),
+                    ),
                     Text(
                       widget.carDetails.modelName.toString(),
                       style: TextStyle(
@@ -58,10 +61,7 @@ class _CarItemState extends State<CarItem> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text(
-                      'Car brand',
-                      style: TextStyle(fontSize: 10),
-                    ),
+                   
                   ],
                 ),
                 IconButton(

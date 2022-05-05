@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -18,13 +18,66 @@ class details extends StatefulWidget {
 }
 
 class _detailsState extends State<details> {
-
-
   FirebaseCloud firebaseCloud = FirebaseCloud();
 
+  @override
+  void initState() {
+    super.initState();
+    AwesomeNotifications().isNotificationAllowed().then(
+      (isAllowed) {
+        if (!isAllowed) {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text('Allow Notifications'),
+              content:
+                  const Text('Our app would like to send you notifications'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    'Don\'t Allow',
+                    style: TextStyle(color: Colors.grey, fontSize: 18),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () => AwesomeNotifications()
+                      .requestPermissionToSendNotifications()
+                      .then((_) => Navigator.pop(context)),
+                  child: const Text(
+                    'Allow',
+                    style: TextStyle(
+                      color: Colors.teal,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    AwesomeNotifications().initialize(
+      'resource://drawable/splash',
+      [
+        NotificationChannel(
+          channelKey: 'basic_channel',
+          channelName: 'Basic Notifications',
+          defaultColor: Color.fromARGB(255, 202, 112, 9),
+          importance: NotificationImportance.High,
+          channelShowBadge: true,
+          channelDescription: '',
+        ),
+      ],
+    );
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -96,20 +149,17 @@ class _detailsState extends State<details> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SpecificationWidget(
-                        text: '\c ' + widget.carDetails.amount.toString(),
+                        text: '\$ ' + widget.carDetails.amount.toString(),
                         helpText: 'Car Price',
                       ),
                       SpecificationWidget(
                         text: widget.carDetails.vehicleNumber.toString(),
                         helpText: 'Vin',
                       ),
-                      // SpecificationWidget(
-                      //   text: '₹ ' +
-                      //       (widget.rideCost +
-                      //               (int.parse(widget.docSnapshot.data.amount)))
-                      //           .toString(),
-                      //   helpText: 'Total cost',
-                      // ),
+                      SpecificationWidget(
+                        text: 'Quick Sale',
+                        helpText: 'Avaliability',
+                      ),
                     ],
                   ),
                   SizedBox(
@@ -123,8 +173,8 @@ class _detailsState extends State<details> {
                         helpText: "Car's Color",
                       ),
                       SpecificationWidget(
-                        text: 'Quick Sale',
-                        helpText: 'Avaliability',
+                        text: 'Accra',
+                        helpText: 'Location',
                       ),
                       SpecificationWidget(
                         text: widget.carDetails.phoneNumber,
@@ -143,17 +193,30 @@ class _detailsState extends State<details> {
                           widget.carDetails.ownerId
                       ? []
                       : [
-                        //Delete
+                          //Delete
                           Padding(
-                            padding: EdgeInsets.all(8),
-                            child: IconButton(
-                                onPressed: ()  async{
-                                 await firebaseCloud.deleteVehicleInfo(context, widget.carDetails.toMap());
+                              padding: EdgeInsets.all(8),
+                              child: IconButton(
+                                icon: Icon(Icons.delete),
+                                onPressed: () async {
+                                  Widget cancelButton = TextButton(
+                                    child: const Text("Cancel"),
+                                    onPressed: () {
+                                      Navigator.of(context, rootNavigator: true)
+                                          .pop('dialog');
+                                    },
+                                  );
+                                  Widget continueButton = TextButton(
+                                    child:
+                                        const Text("Yes, Delete Car Forever"),
+                                    onPressed: () async {
+                                      await firebaseCloud.deleteVehicleInfo(
+                                          context, widget.carDetails.toMap());
                                       setState(() {});
                                       Navigator.of(context, rootNavigator: true)
                                           .pop('dialog');
                                       Fluttertoast.showToast(
-                                          msg: "Task Deleted",
+                                          msg: "Car Deleted",
                                           toastLength: Toast.LENGTH_SHORT,
                                           gravity: ToastGravity.CENTER,
                                           timeInSecForIosWeb: 1,
@@ -161,13 +224,33 @@ class _detailsState extends State<details> {
                                               Color.fromARGB(255, 95, 55, 43),
                                           textColor: Colors.white,
                                           fontSize: 16.0);
-                                }, icon: Icon(Icons.delete)),
-                          ),
+                                    },
+                                  );
+                                  // set up the AlertDialog
+                                  AlertDialog alert = AlertDialog(
+                                    title: const Text(
+                                        "Confirm Permanent Deletion"),
+                                    content: const Text(
+                                        "You are about to perform an action that cannot be undone..."),
+                                    actions: [
+                                      cancelButton,
+                                      continueButton,
+                                    ],
+                                  );
+                                  // show the dialog
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return alert;
+                                    },
+                                  );
+                                },
+                              )),
                           //Edit button
                           Padding(
                             padding: EdgeInsets.all(8),
                             child: IconButton(
-                                onPressed: () {
+                                onPressed: () async {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -177,6 +260,15 @@ class _detailsState extends State<details> {
                                     ),
                                   );
                                   setState(() {});
+                                  await AwesomeNotifications()
+                                      .createNotification(
+                                    content: NotificationContent(
+                                        id: 10,
+                                        channelKey: 'basic_channel',
+                                        title: 'Do It',
+                                        body:
+                                            'Your task has been created successfully'),
+                                  );
                                 },
                                 icon: Icon(Icons.edit)),
                           ),

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
 import '../Components/app_title.dart';
-import '../Components/constants.dart';
 
 class InstructionPage extends StatelessWidget {
   const InstructionPage({Key? key}) : super(key: key);
@@ -12,6 +10,7 @@ class InstructionPage extends StatelessWidget {
     TextStyle? bodyText1 = Theme.of(context).textTheme.bodyText1;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 182, 58, 58),
         title: const AppBarTitle(
           leadingTitle: 'FAQs',
         ),
@@ -33,92 +32,48 @@ class InstructionPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'How to add a todo?',
+                'How to add a car',
                 style: headline6,
               ),
               Text(
-                'Tap on the big box "What\'s needs to be done?" given above on the homepage. And just type your todo and then press enter.',
+                'Go to the side drawer and click upload car. Then tap on the car icon to upload a picture of the car from the device. Fill in the other fields and click upload.',
                 style: bodyText1,
               ),
               const Divider(height: 16),
               Text(
-                'How to mark a todo as completed?',
+                'How to view a car',
                 style: headline6,
               ),
               Text(
-                'Tap on the circle icon button leading the todo name.',
+                'Tap on the arrow button on the right corner to view the specifications of the car.',
+                style: bodyText1,
+              ),
+               const Divider(height: 16),
+              Text(
+                'How to edit',
+                style: headline6,
+              ),
+              Text(
+                'On the details screen, press the edit icon. Click the car icon to upload a new image and fill in the desired details and submit. ',
                 style: bodyText1,
               ),
               const Divider(height: 16),
               Text(
-                'How to permanently delete a todo?',
+                'How delete car',
                 style: headline6,
               ),
               Text(
-                'Just swipe the todo from any direction.',
+                'On the details screen, press the delete icon.The car would be deleted',
                 style: bodyText1,
               ),
               const Divider(height: 16),
+               const Divider(height: 16),
               Text(
-                'How to pin a todo',
+                'How buy a car',
                 style: headline6,
               ),
               Text(
-                'Tap on the pin icon button trailing the todo name. It will be pinned to the Pinned tab.',
-                style: bodyText1,
-              ),
-              const Divider(height: 16),
-              Text(
-                'How to edit a todo?',
-                style: headline6,
-              ),
-              Text(
-                'Just tap on the todo title and type whatever you want.',
-                style: bodyText1,
-              ),
-              const Divider(height: 16),
-              Text(
-                'How to take backup of my todos?',
-                style: headline6,
-              ),
-              Text(
-                'Go to \'Backup and Restore\' page and just tap the big \'Create Backup\' button. Your backups will be saved on this folder "/Android/data/$appName/files/". Don\'t forget to give the storage permission to app.',
-                style: bodyText1,
-              ),
-              const Divider(height: 16),
-              Text(
-                'How to restore backup?',
-                style: headline6,
-              ),
-              Text(
-                'Go to \'Backup and Restore\' page and then tap the big \'List of backup files\' button. You will be navigated to the \'Backup List\' page where you will find all the backups created by time and date. Tap on the backup file title and then tap on the \'Restore\'. Your data is now restored.',
-                style: bodyText1,
-              ),
-              const Divider(height: 16),
-              Text(
-                'How to share backup file?',
-                style: headline6,
-              ),
-              Text(
-                'Go to \'Backup and Restore\' page and then tap the big \'List of backup files\' button. You will be navigated to the \'Backup List\' page where you will find all the backups created by time and date. Tap the share icon next to backup file title. Share wherever you want to share in json file format.',
-                style: bodyText1,
-              ),
-              const Divider(height: 16),
-              Text(
-                'How to restore backup file from storage?',
-                style: headline6,
-              ),
-              Text(
-                'Go to \'Backup and Restore\' page and just tap the big \'Restore backup from storage\' button. Then, just choose a valid json file and you\'re done.',
-                style: bodyText1,
-              ),
-              const Divider(height: 16),
-              Text(
-                'Where can I find my created backup files in storage?',
-                style: headline6,
-              ),
-              Text(
-                'Go to this location in your file manager "/Android/data/$appName/files/". You will find all the created backup files in this folder.',
+                'On the details screen, press the contact icon to contact the seller.',
                 style: bodyText1,
               ),
             ],

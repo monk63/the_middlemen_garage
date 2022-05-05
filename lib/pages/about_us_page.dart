@@ -1,12 +1,8 @@
 import 'package:carbon_icons/carbon_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-
 import '../Components/app_title.dart';
 import '../Components/constants.dart';
-
-
 
 class AboutUsPage extends StatelessWidget {
   const AboutUsPage({Key? key}) : super(key: key);
@@ -18,9 +14,9 @@ class AboutUsPage extends StatelessWidget {
           ? await launch(_url)
           : throw 'Could not launch $_url';
     }
-
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 182, 58, 58),
         actions: const [
           Icon(
             Icons.ac_unit,
