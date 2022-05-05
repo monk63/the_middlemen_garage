@@ -25,9 +25,9 @@ class CustomButton extends StatelessWidget {
             // Color.fromRGBO(110, 82, 252, 1),
             // Color.fromRGBO(83, 145, 248, 1),
 
-            Color.fromRGBO(251, 194, 235, 1),
-            Color.fromRGBO(166, 192, 238, 1),
-            Color.fromRGBO(161, 196, 253, 1),
+            Color.fromARGB(255, 204, 12, 37),
+            Color.fromARGB(255, 124, 15, 101),
+            Color.fromARGB(255, 2, 10, 22),
           ],
         ),
         borderRadius: BorderRadius.all(Radius.circular(30)),

@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:the_middlemen_garage/Components/firebase_services.dart';
 import 'package:the_middlemen_garage/model/user_model.dart';
 import 'package:the_middlemen_garage/pages/upload_cars.dart';
 import 'package:the_middlemen_garage/widgets/widgets.dart';
@@ -15,6 +18,11 @@ class details extends StatefulWidget {
 }
 
 class _detailsState extends State<details> {
+
+
+  FirebaseCloud firebaseCloud = FirebaseCloud();
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -135,11 +143,27 @@ class _detailsState extends State<details> {
                           widget.carDetails.ownerId
                       ? []
                       : [
+                        //Delete
                           Padding(
                             padding: EdgeInsets.all(8),
                             child: IconButton(
-                                onPressed: () {}, icon: Icon(Icons.delete)),
+                                onPressed: ()  async{
+                                 await firebaseCloud.deleteVehicleInfo(context, widget.carDetails.toMap());
+                                      setState(() {});
+                                      Navigator.of(context, rootNavigator: true)
+                                          .pop('dialog');
+                                      Fluttertoast.showToast(
+                                          msg: "Task Deleted",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.CENTER,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor:
+                                              Color.fromARGB(255, 95, 55, 43),
+                                          textColor: Colors.white,
+                                          fontSize: 16.0);
+                                }, icon: Icon(Icons.delete)),
                           ),
+                          //Edit button
                           Padding(
                             padding: EdgeInsets.all(8),
                             child: IconButton(

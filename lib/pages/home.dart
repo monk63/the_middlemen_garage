@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       // scrollDirection: Axis.horizontal,
                     ),
                   ),
-                  Text('Top Delars'),
+                  
                 ],
               );
             }

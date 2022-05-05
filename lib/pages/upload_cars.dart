@@ -77,7 +77,7 @@ class _uploadCarsState extends State<uploadCars> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    CustomBackButton(pageHeader: 'Register your car'),
+                    CustomBackButton(pageHeader: 'Upload your car'),
                     SizedBox(
                       height: 20,
                     ),
@@ -201,7 +201,7 @@ class _uploadCarsState extends State<uploadCars> {
                       onTap: () async {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text('Processing'),
+                            content: Text('Upload in progress'),
                           ),
                         );
                         VehicleUser owner = VehicleUser(
@@ -239,7 +239,7 @@ class _uploadCarsState extends State<uploadCars> {
                         }
                       },
                       child: CustomButton(
-                        text: 'Register',
+                        text: 'Upload',
                       ),
                     ),
                     SizedBox(

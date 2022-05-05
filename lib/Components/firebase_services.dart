@@ -99,4 +99,45 @@ class FirebaseCloud {
 
     return true;
   }
+
+
+   //upload image
+  Future<bool> deleteVehicleInfo(BuildContext context,
+  Map<String, dynamic> data) async {
+    FirebaseStorage storage = FirebaseStorage.instance;
+    User currentUser = FirebaseAuth.instance.currentUser!;
+
+    //getting image reference from url
+    final Reference ref = storage.ref(currentUser.uid).child("images/");
+    List<Future> futures = [];
+    for (String url in data["vehicleImg"]) {
+      // https://firebasestorage.googleapis.com/v0/b/the-garage-5676d.appspot.com/o/qhZ5NfC5cRMxREwT0vprmGJEDNA2%2Fimages%2F1651754590650977?alt=media&token=8516668c-a269-4c86-a4a0-ec99f6cd12e4
+
+      String path = url.split("?")[0].split("%").last;
+      print("path ${ref.child(path).fullPath}");
+      futures.add(ref.child(path).delete());
+
+
+      // futures.add(ref
+      //     .child(url.split("pattern")))
+      //     .putFile(file));
+    }
+
+//deleting images
+    // await Future.wait(futures);
+
+    print("data one $data");
+
+    print("data two $data");
+
+    //deleting file
+    QuerySnapshot<Map<String, dynamic>> e = await FirebaseFirestore.instance.collection('cars').where("vehicleNumber", isEqualTo: data["vehicleNumber"]).limit(1).get();
+    await e.docs.first.reference.delete();
+
+    return true;
+  }
+
+
+
+
 }

@@ -25,7 +25,10 @@ class _CarItemState extends State<CarItem> {
         ),
         child: Column(
           children: <Widget>[
-            Image.network(widget.carDetails.vehicleImg[0]),
+             (widget.carDetails.vehicleImg.isNotEmpty) ?
+
+              Image.network(widget.carDetails.vehicleImg[0])
+            : Icon(Icons.image),
             SizedBox(
               height: 20,
             ),
